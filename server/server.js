@@ -1,6 +1,6 @@
 import express from "express"
 
-
+import connectDB from "./config/DB";
 const app=express()
 
 
