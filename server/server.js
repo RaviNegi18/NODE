@@ -1,11 +1,10 @@
 import express from "express"
 
 import connectDB from "./config/DB";
+import { connect } from "mongoose";
 const app=express()
-
-
 const PORT=5000;
-
+connectDB()
 
 
 
