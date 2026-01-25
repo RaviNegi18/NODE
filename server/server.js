@@ -7,8 +7,6 @@ const app=express()
 const PORT=5000;
 connectDB()
 
-const token=crypto.randomBytes(32).toString("hex")
-console.log(token)
 
 
 

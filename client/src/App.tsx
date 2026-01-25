@@ -1,8 +1,8 @@
 
-
+import SignUp from "./pages/SignUp"
 const App = () => {
   return (
-    <div className="">App</div>
+  <SignUp/>
   )
 }
 
