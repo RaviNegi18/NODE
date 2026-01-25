@@ -5,7 +5,6 @@ import { configDotenv } from "dotenv";
 
 configDotenv();
 
-
 // REGISTER SERVICE
 export const register = async (userData) => {
   const { username, email, password } = userData;
@@ -34,7 +33,7 @@ export const register = async (userData) => {
       username: newUser.username,
     },
     process.env.SECRET_TOKEN,
-    { expiresIn: "7d" }
+    { expiresIn: "7d" },
   );
 
   return {
@@ -47,8 +46,6 @@ export const register = async (userData) => {
     token,
   };
 };
-
-
 
 // LOGIN SERVICE
 export const login = async (userData) => {
@@ -67,14 +64,18 @@ export const login = async (userData) => {
   }
 
   // 3. Generate JWT
+
   const token = Jwt.sign(
     {
       id: existing._id,
       username: existing.username,
       email: existing.email,
     },
+
     process.env.SECRET_TOKEN,
-    { expiresIn: "7d" }
+    {
+      expiresIn: "7d",
+    },
   );
 
   return {
