@@ -1,5 +1,5 @@
 import User from "../schema/user.schema.js";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
 
