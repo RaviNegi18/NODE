@@ -7,6 +7,8 @@ configDotenv();
 
 // REGISTER SERVICE
 export const register = async (userData) => {
+
+console.log("here is user---",userData)
   const { username, email, password } = userData;
 
   // 1. Check user exists
