@@ -1,13 +1,13 @@
 import { useState } from "react";
-import React from "react";
-const SignUp = () => {
+
+const SignIn = () => {
   const [formData, setFormData] = useState({
-    username: "",
+ 
     email: "",
     password: "",
   });
 
-  function handleChange(e) {
+  function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
 
     setFormData((prev) => ({
@@ -16,7 +16,7 @@ const SignUp = () => {
     }));
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     console.log("Submitting...", formData);
@@ -81,4 +81,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
