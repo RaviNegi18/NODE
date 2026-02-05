@@ -12,8 +12,7 @@ connectDB()
 app.use(express.json())
 
 
-const token=crypto.randomBytes(32).toString('hex')
-console.log(token)
+
 app.use(cors())
 
 // app.use("/api", userRoutes)
