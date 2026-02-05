@@ -8,7 +8,7 @@ export const userRegister = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000, // 15 mi
+      maxAge: 15 * 60 * 1000, // 15 minutes
     });
 
     res.cookie("refreshToken", result.refreshToken, {
