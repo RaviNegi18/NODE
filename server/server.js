@@ -3,7 +3,7 @@ import express from "express"
 import connectDB from "./config/DB.js";
 import cors from 'cors'
 import { configDotenv } from "dotenv";
-import crypto from "crypto"
+
 configDotenv()
 const app=express()
 const PORT=5000;
