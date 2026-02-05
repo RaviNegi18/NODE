@@ -1,5 +1,5 @@
 import * as services from "../services"
-
+// user resgitser
 export const userRegister = async (req, res) => {
   try {
     const result = await services.register(req.body);
