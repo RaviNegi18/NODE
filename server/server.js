@@ -15,7 +15,7 @@ app.use(express.json())
 
 app.use(cors())
 
-
+// app.use("/api", userRoutes)
 
 app.listen(PORT,()=>{
     console.log(   `app is listening on http://localhost:${PORT}`)
