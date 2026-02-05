@@ -1,5 +1,5 @@
 import * as services from "../services"
-// user resgitser
+
 export const userRegister = async (req, res) => {
   try {
     const result = await services.register(req.body);
@@ -8,7 +8,7 @@ export const userRegister = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: 15 * 60 * 1000, // 15 mi
     });
 
     res.cookie("refreshToken", result.refreshToken, {
