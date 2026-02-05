@@ -1,42 +1,40 @@
 import User from "../schema/user.schema.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
-import { configDotenv } from "dotenv";
 
-configDotenv();
+const generateAccessToken = (user) => {
+  return Jwt.sign(
+    { id: user._id, email: user.email, username: user.username },
+    process.env.ACCESS_SECRET,
+    { expiresIn: "15m" }
+  );
+};
+
+const generateRefreshToken = (user) => {
+  return Jwt.sign(
+    { id: user._id },
+    process.env.REFRESH_SECRET,
+    { expiresIn: "7d" }
+  );
+};
 
 // REGISTER SERVICE
 export const register = async (userData) => {
-
-console.log("here is user---",userData)
   const { username, email, password } = userData;
 
-  // 1. Check user exists
   const existing = await User.findOne({ email });
-  if (existing) {
-    throw new Error("User already exists");
-  }
+  if (existing) throw new Error("User already exists");
 
-  // 2. Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const hashed = await bcrypt.hash(password, 10);
 
-  // 3. Create user
   const newUser = await User.create({
     username,
     email,
-    password: hashedPassword,
+    password: hashed,
   });
 
-  // 4. Generate token
-  const token = Jwt.sign(
-    {
-      id: newUser._id,
-      email: newUser.email,
-      username: newUser.username,
-    },
-    process.env.SECRET_TOKEN,
-    { expiresIn: "7d" },
-  );
+  const accessToken = generateAccessToken(newUser);
+  const refreshToken = generateRefreshToken(newUser);
 
   return {
     message: "User registered successfully",
@@ -45,7 +43,8 @@ console.log("here is user---",userData)
       username: newUser.username,
       email: newUser.email,
     },
-    token,
+    accessToken,
+    refreshToken,
   };
 };
 
@@ -53,32 +52,14 @@ console.log("here is user---",userData)
 export const login = async (userData) => {
   const { email, password } = userData;
 
-  // 1. Find user
   const existing = await User.findOne({ email });
-  if (!existing) {
-    throw new Error("User not found");
-  }
+  if (!existing) throw new Error("User not found");
 
-  // 2. Match passwords
   const match = await bcrypt.compare(password, existing.password);
-  if (!match) {
-    throw new Error("Incorrect password");
-  }
+  if (!match) throw new Error("Incorrect password");
 
-  // 3. Generate JWT
-
-  const token = Jwt.sign(
-    {
-      id: existing._id,
-      username: existing.username,
-      email: existing.email,
-    },
-
-    process.env.SECRET_TOKEN,
-    {
-      expiresIn: "7d",
-    },
-  );
+  const accessToken = generateAccessToken(existing);
+  const refreshToken = generateRefreshToken(existing);
 
   return {
     message: "Login successful",
@@ -87,6 +68,7 @@ export const login = async (userData) => {
       username: existing.username,
       email: existing.email,
     },
-    token,
+    accessToken,
+    refreshToken,
   };
 };

@@ -1,47 +1,31 @@
-// User Controllers
-import * as services from "../services/user.service.js";
+import * as services from "../services"
 
 export const userRegister = async (req, res) => {
-    console.log("here is req-----",req.body)
   try {
     const result = await services.register(req.body);
 
+    res.cookie("accessToken", result.accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 15 * 60 * 1000, // 15 minutes
+    });
+
+    res.cookie("refreshToken", result.refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
 
     return res.status(201).json({
-      success: true,
+      success: true,  
+      
       message: result.message,
       user: result.user,
-      token: result.token,   // if token is generated on register
     });
 
-  } catch (error) {
-    console.error("Register Error:", error.message);
-
-    return res.status(400).json({
-      success: false,
-      message: error.message || "Registration failed",
-    });
-  }
-};
-
-
-export const userLogin = async (req, res) => {
-  try {
-    const result = await services.login(req.body);
-
-    return res.status(200).json({
-      success: true,
-      message: result.message,
-      user: result.user,
-      token: result.token,
-    });
-
-  } catch (error) {
-    console.error("Login Error:", error.message);
-
-    return res.status(400).json({
-      success: false,
-      message: error.message || "Login failed",
-    });
+  } catch (err) {
+    res.status(400).json({ success: false, message: err.message });
   }
 };
