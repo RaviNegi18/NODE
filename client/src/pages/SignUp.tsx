@@ -23,7 +23,7 @@ const SignUp = () => {
 
     try {
       // ---- Example: Send Data to Backend ----
-      const res = await fetch("http://localhost:5000/api/register", {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

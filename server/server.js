@@ -3,6 +3,7 @@ import express from "express"
 import connectDB from "./config/DB.js";
 import cors from 'cors'
 import { configDotenv } from "dotenv";
+import userRoutes from "./routes/authRoutes.js";
 
 configDotenv()
 const app=express()
@@ -15,7 +16,7 @@ app.use(express.json())
 
 app.use(cors())
 
-// app.use("/api", userRoutes)
+app.use("/api/auth", userRoutes)
 
 app.listen(PORT,()=>{
     console.log(   `app is listening on http://localhost:${PORT}`)
