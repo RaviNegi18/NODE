@@ -3,17 +3,19 @@ import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 
 const generateAccessToken = (user) => {
+  console.log("Generating access token for user:",process.env.SECRET_TOKEN);
   return Jwt.sign(
     { id: user._id, email: user.email, username: user.username },
-    process.env.ACCESS_SECRET,
+    process.env.SECRET_TOKEN,
     { expiresIn: "15m" }
   );
 };
 
 const generateRefreshToken = (user) => {
+  console.log("Generating refresh token for user:",process.env.REFRESH_TOKEN);
   return Jwt.sign(
     { id: user._id },
-    process.env.REFRESH_SECRET,
+    process.env.REFRESH_TOKEN,
     { expiresIn: "7d" }
   );
 };

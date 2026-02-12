@@ -23,6 +23,8 @@ export const userRegister = async (req, res) => {
       
       message: result.message,
       user: result.user,
+      refreshToken: result.refreshToken,
+      accessToken: result.accessToken,
     });
 
   } catch (err) {
@@ -51,6 +53,15 @@ export const userLogin =async(req,res)=>{
       secure:true,
       sameSite:"strict",
       maxAge:7*24*60*60*1000
+    })
+
+    return res.status(200).json({
+      success:true,
+      message:result.message,
+      user:result.user,
+      refreshToken:result.refreshToken,
+      accessToken:result.accessToken
+
     })
 
   }catch(err){
